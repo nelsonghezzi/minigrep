@@ -1,0 +1,43 @@
+environment:
+  global:
+    RUST_VERSION: stable
+    CRATE_NAME: minigrep
+
+  matrix:
+    - TARGET: x86_64-pc-windows-msvc
+
+branches:
+  only:
+    - master
+    - /^v\d+\.\d+\.\d+.*$/
+
+install:
+  - curl -sSf -o rustup-init.exe https://win.rustup.rs/
+  - rustup-init.exe -y --default-host %TARGET% --default-toolchain %RUST_VERSION%
+  - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
+  - rustc --version --verbose
+  - cargo --version --verbose
+
+build_script:
+  - cargo build --release
+
+after_build:
+  - 7z a minigrep.zip %APPVEYOR_BUILD_FOLDER%\target\release\minigrep.exe
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: rO25OW3CtdDg9SjLDjiFYh5RAfxs4+nD3BKzt0+2nQ096V+CbSnMZ4VxF53sqg2o
+  artifact: Minigrep
+  description: Minigrep
+  on:
+    appveyor_repo_tag: true
+
+artifacts:
+  - path: minigrep.zip
+    name: Minigrep
+
+cache:
+  - C:\Users\appveyor\.rustup\toolchains
+  - C:\Users\appveyor\.cargo\registry
+  - target
