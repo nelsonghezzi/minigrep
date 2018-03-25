@@ -22,7 +22,7 @@ fn main() {
                 .help("Performs the search in a case-sensitive manner")
                 .short("s")
                 .long("case-sensitive")
-                .conflicts_with("case-insensitive"),
+                .conflicts_with(CASE_INSENSITIVE_ARG),
         )
         .arg(
             Arg::with_name(CASE_INSENSITIVE_ARG)
