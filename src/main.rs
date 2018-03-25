@@ -1,3 +1,4 @@
+#[macro_use]
 extern crate clap;
 extern crate minigrep;
 
@@ -15,7 +16,7 @@ fn main() {
     const FILE_ARG: &str = "FILE";
 
     let args = App::new("minigrep")
-        .version("0.1.0")
+        .version(crate_version!())
         .about("grep-like command-line program written in Rust.")
         .author("Nelson G. Ghezzi")
         .arg(
