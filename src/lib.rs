@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::env;
 use std::error::Error;
 
 #[derive(Debug)]
@@ -11,21 +10,11 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(mut args: env::Args) -> Result<Config, &'static str> {
-        args.next();
-
-        let query = match args.next() {
-            Some(arg) => arg,
-            None => return Err("Didn't get a query string"),
-        };
-
-        let filename = match args.next() {
-            Some(arg) => arg,
-            None => return Err("Didn't get a file name"),
-        };
-
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
-
+    pub fn new(
+        query: String,
+        filename: String,
+        case_sensitive: bool,
+    ) -> Result<Config, &'static str> {
         Ok(Config {
             query,
             filename,
