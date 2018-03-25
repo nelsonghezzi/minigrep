@@ -11,6 +11,7 @@ use clap::{App, Arg};
 fn main() {
     const CASE_SENSITIVE_ARG: &str = "case-sensitive";
     const CASE_INSENSITIVE_ARG: &str = "case-insensitive";
+    const INVERT_MATCH_ARG: &str = "invert-match";
     const FILE_ARG: &str = "FILE";
 
     let args = App::new("minigrep")
@@ -29,6 +30,12 @@ fn main() {
                 .help("Performs the search in a case-insensitive manner")
                 .short("i")
                 .long("case-insensitive"),
+        )
+        .arg(
+            Arg::with_name(INVERT_MATCH_ARG)
+                .help("Search for lines not containing the pattern")
+                .short("n")
+                .long("invert-match"),
         )
         .arg(
             Arg::with_name("query")
@@ -58,6 +65,7 @@ fn main() {
         args.value_of("query").unwrap().to_string(),
         args.value_of(FILE_ARG).unwrap().to_string(),
         case_sensitive,
+        args.is_present(INVERT_MATCH_ARG),
     ).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {}", err);
         process::exit(1);
