@@ -88,10 +88,7 @@ Rust:
 safe, fast, productive.
 Pick three.";
 
-        assert_eq!(
-            vec!["Rust:", "Pick three."],
-            search(query, contents, true)
-        );
+        assert_eq!(vec!["Rust:", "Pick three."], search(query, contents, true));
     }
 
     #[test]
