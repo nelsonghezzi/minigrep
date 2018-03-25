@@ -81,6 +81,20 @@ Pick three.";
     }
 
     #[test]
+    fn case_sensitive_invert_match() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(
+            vec!["Rust:", "Pick three."],
+            search(query, contents, true)
+        );
+    }
+
+    #[test]
     fn case_insensitive() {
         let query = "rUsT";
         let contents = "\
@@ -92,6 +106,21 @@ Trust me.";
         assert_eq!(
             vec!["Rust:", "Trust me."],
             search_case_insensitive(query, contents, false)
+        )
+    }
+
+    #[test]
+    fn case_insensitive_invert_match() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
+
+        assert_eq!(
+            vec!["safe, fast, productive.", "Pick three."],
+            search_case_insensitive(query, contents, true)
         )
     }
 }
