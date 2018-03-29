@@ -10,15 +10,20 @@ use minigrep::Config;
 use clap::{App, Arg};
 
 fn main() {
+    const AUTHOR: &str = "Nelson G. Ghezzi";
+
     const CASE_SENSITIVE_ARG: &str = "case-sensitive";
     const CASE_INSENSITIVE_ARG: &str = "case-insensitive";
     const INVERT_MATCH_ARG: &str = "invert-match";
     const FILE_ARG: &str = "FILE";
 
+    let copyright_notice = format!("Copyright (C) 2018 {}.", AUTHOR);
+
     let args = App::new("minigrep")
         .version(crate_version!())
         .about("grep-like command-line program written in Rust.")
-        .author("Nelson G. Ghezzi")
+        .author(AUTHOR)
+        .after_help(&copyright_notice[..])
         .arg(
             Arg::with_name(CASE_SENSITIVE_ARG)
                 .help("Performs the search in a case-sensitive manner")
